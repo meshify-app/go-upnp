@@ -100,6 +100,28 @@ func (d *IGD) Forward(port uint16, desc string) error {
 	time.Sleep(time.Millisecond)
 	return d.client.AddPortMapping("", port, "UDP", port, ip, true, desc, 0)
 }
+// Forward forwards the specified port, and adds its description to the
+// router's port mapping table.
+func (d *IGD) ForwardTCP(port uint16, desc string) error {
+	ip, err := d.getInternalIP()
+	if err != nil {
+		return err
+	}
+
+	time.Sleep(time.Millisecond)
+	return d.client.AddPortMapping("", port, "TCP", port, ip, true, desc, 0)
+}
+// Forward forwards the specified port, and adds its description to the
+// router's port mapping table.
+func (d *IGD) ForwardUDP(port uint16, desc string) error {
+	ip, err := d.getInternalIP()
+	if err != nil {
+		return err
+	}
+
+	time.Sleep(time.Millisecond)
+	return d.client.AddPortMapping("", port, "UDP", port, ip, true, desc, 0)
+}
 
 // Clear un-forwards a port, removing it from the router's port mapping table.
 func (d *IGD) Clear(port uint16) error {
